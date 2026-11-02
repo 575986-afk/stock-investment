@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>StockSim - 회원가입</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f7f9fa;
+            /* 기존의 flex 중앙 정렬 제거 및 min-height 적용 */
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* 헤더 스타일 */
+        header { background: #fff; border-bottom: 1px solid #e1e4e8; display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; }
+        .logo { font-size: 20px; font-weight: bold; color: #00c7ae; text-decoration: none; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { text-decoration: none; color: #555; font-size: 15px; font-weight: 500; }
+        .nav-links a:hover { color: #00c7ae; }
+        .auth-buttons { display: flex; gap: 10px; }
+        .btn { padding: 8px 16px; border-radius: 6px; font-size: 14px; text-decoration: none; font-weight: 500; cursor: pointer; }
+        .btn-login { border: 1px solid #d1d5db; color: #374151; background: #fff; }
+        .btn-signup { background: #00c7ae; color: #fff; border: none; }
+
+        /* 회원가입 박스를 화면 중앙에 배치하기 위한 래퍼 */
+        .main-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* 헤더 높이를 제외한 나머지 공간에서 중앙 정렬 */
+            min-height: calc(100vh - 70px);
+            padding: 20px;
+        }
+
+        .signup-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            width: 400px;
+            text-align: center;
+        }
+
+
+        .login-logo {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #00c7ae;
+            margin-bottom: 30px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #dfe6e9;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2d3436;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #00b894;
+        }
+
+        .form-group input::placeholder {
+            color: #b2bec3;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background-color: #00b894;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #019875;
+        }
+
+        .sub-link {
+            margin-top: 25px;
+            font-size: 13px;
+            color: #636e72;
+        }
+
+        .sub-link a {
+            color: #00b894;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .sub-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 상단 헤더 -->
+<div th:replace="~{fragments/mainHeader :: siteHeader}"></div>
+
+<!-- 본문 중앙 정렬 래퍼 -->
+<div class="main-wrapper">
+    <div class="signup-container">
+        <!-- 로고 영역 -->
+            <a href="/" class="login-logo">📊 StockSim</a>
+
+        <!-- 회원가입 폼 -->
+        <form action="/signup" method="post">
+
+            <!-- 아이디(이메일) 입력 -->
+            <div class="form-group">
+                <label for="email">아이디 (이메일)</label>
+                <input type="email" id="email" name="email" placeholder="아이디를 입력하세요" required>
+            </div>
+
+            <!-- 비밀번호 입력 -->
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+            </div>
+
+            <!-- 비밀번호 확인 -->
+            <div class="form-group">
+                <label for="passwordConfirm">비밀번호 확인</label>
+                <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="비밀번호를 다시 입력하세요" required>
+            </div>
+
+            <!-- 회원가입 버튼 -->
+            <button type="submit" class="btn-submit">회원가입</button>
+        </form>
+
+        <!-- 하단 로그인 링크 -->
+        <div class="sub-link">
+            이미 계정이 있으신가요? <a th:href="@{/login}">로그인</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

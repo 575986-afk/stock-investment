@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>로그인 - 주식 모의투자 플랫폼</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Apple SD Gothic Neo', sans-serif; background-color: #f4f6f9; color: #333; }
+
+    /* 헤더 스타일 */
+    header { background: #fff; border-bottom: 1px solid #e1e4e8; display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; }
+    .logo { font-size: 20px; font-weight: bold; color: #00c7ae; text-decoration: none; }
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { text-decoration: none; color: #555; font-size: 15px; font-weight: 500; }
+    .nav-links a:hover { color: #00c7ae; }
+    .auth-buttons { display: flex; gap: 10px; }
+    .btn { padding: 8px 16px; border-radius: 6px; font-size: 14px; text-decoration: none; font-weight: 500; cursor: pointer; }
+    .btn-login { border: 1px solid #d1d5db; color: #374151; background: #fff; }
+    .btn-signup { background: #00c7ae; color: #fff; border: none; }
+
+    /* 로그인 페이지 전용 스타일 */
+    .login-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: calc(100vh - 73px); /* 헤더 높이 제외한 화면 중앙 정렬 */
+      background-color: #f4f6f9;
+    }
+    .login-card {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      width: 100%;
+      max-width: 400px;
+    }
+    .login-logo {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #00c7ae;
+      margin-bottom: 30px;
+      text-decoration: none;
+      display: block;
+    }
+    .input-group {
+      margin-bottom: 20px;
+    }
+    .input-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 15px;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+    .input-group input:focus {
+      outline: none;
+      border-color: #00c7ae;
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      background: #00c7ae;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover {
+      background: #00b09b;
+    }
+    .login-footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+    .login-footer a {
+      color: #00c7ae;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .login-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/mainHeader :: siteHeader}"></div>
+
+<!-- 로그인 컨텐츠 영역 -->
+<div class="login-wrapper">
+  <div class="login-card">
+    <a href="/" class="login-logo">📊 StockSim</a>
+
+    <form th:action="@{/login}" method="post">
+      <div class="input-group">
+        <label for="username">아이디 (이메일)</label>
+        <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" required>
+      </div>
+
+      <div class="input-group">
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+      </div>
+
+      <button type="submit" class="btn-submit">로그인</button>
+    </form>
+
+    <div class="login-footer">
+      계정이 없으신가요? <a href="/signup">회원가입</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

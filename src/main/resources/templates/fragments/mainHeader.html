@@ -1,0 +1,19 @@
+<header th:fragment="siteHeader">
+  <a href="/" class="logo">📊 StockSim</a>
+  <nav class="nav-links">
+    <a href="/">홈</a>
+    <a href="/stockMarket">국내/해외주식</a>
+    <a href="/ranking">투자랭킹</a>
+    <a href="/community">커뮤니티</a>
+  </nav>
+  <div class="auth-buttons">
+    <th:block th:if="${isLogin}">
+      <span style="font-size: 14px; font-weight: bold; align-self: center;" th:text="${username} + '님 환영합니다'">사용자님</span>
+      <a href="/logout" class="btn btn-login">로그아웃</a>
+    </th:block>
+    <th:block th:unless="${isLogin}">
+      <a href="/login" class="btn btn-login">로그인</a>
+      <a href="/signup" class="btn btn-signup">회원가입</a>
+    </th:block>
+  </div>
+</header>

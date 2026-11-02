@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>StockSim - 커뮤니티</title>
+  <!-- Tailwind CSS CDN -->
+  <style>
+    /* 헤더 스타일 */
+    header { background: #fff; border-bottom: 1px solid #e1e4e8; display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; }
+    .logo { font-size: 20px; font-weight: bold; color: #00c7ae; text-decoration: none; }
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { text-decoration: none; color: #555; font-size: 15px; font-weight: 500; }
+    .nav-links a:hover { color: #00c7ae; }
+    .auth-buttons { display: flex; gap: 10px; }
+    .btn { padding: 8px 16px; border-radius: 6px; font-size: 14px; text-decoration: none; font-weight: 500; cursor: pointer; }
+    .btn-login { border: 1px solid #d1d5db; color: #374151; background: #fff; }
+    .btn-signup { background: #00c7ae; color: #fff; border: none; }
+
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<div th:replace="~{fragments/mainHeader :: siteHeader}"></div>
+<!-- 메인 콘텐츠 영역 (헤더 제외) -->
+<main class="max-w-5xl mx-auto py-10 px-4">
+  <!-- 상단 타이틀 및 글쓰기 버튼 -->
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">투자 커뮤니티</h1>
+      <p class="자유로운 의견과 투자 노하우를 공유해보세요 text-sm text-gray-500 mt-1">자유로운 의견과 투자 노하우를 공유해보세요.</p>
+    </div>
+    <button class="px-4 py-2 text-sm font-semibold text-white bg-emerald-500 hover:bg-emerald-600 rounded-xl shadow-sm transition-colors">
+      글쓰기
+    </button>
+  </div>
+
+  <!-- 카테고리 탭 (자유, 토론, 질문 등) -->
+  <div class="flex gap-2 mb-6">
+    <button class="px-4 py-2 bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-sm">전체</button>
+    <button class="px-4 py-2 bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 rounded-xl text-sm font-medium transition-colors">자유게시판</button>
+    <button class="px-4 py-2 bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 rounded-xl text-sm font-medium transition-colors">종목토론</button>
+    <button class="px-4 py-2 bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 rounded-xl text-sm font-medium transition-colors">질문/답변</button>
+  </div>
+
+  <!-- 게시글 목록 카드 -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="divide-y divide-gray-100">
+      <!-- Thymeleaf 반복문 (백엔드에서 넘겨준 communityList 모델 데이터 출력) -->
+      <div th:each="post : ${communityList}" class="p-6 hover:bg-gray-50 transition-colors cursor-pointer flex justify-between items-center">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 bg-emerald-50 text-emerald-600 text-xs font-semibold rounded-md" th:text="${post.category}">자유</span>
+            <h2 class="text-base font-bold text-gray-800 hover:text-emerald-600 transition-colors" th:text="${post.title}">삼성전자 지금 들어가도 될까요?</h2>
+          </div>
+          <p class="text-sm text-gray-500 line-clamp-1" th:text="${post.content}">차트상으로 바닥 찍은 것 같은데 고수님들 의견이 궁금합니다...</p>
+          <div class="flex items-center gap-4 text-xs text-gray-400 pt-1">
+            <span th:text="${post.author}">작성자명</span>
+            <span>•</span>
+            <span th:text="${post.createdAt}">10분 전</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 text-sm text-gray-500">
+          <div class="flex items-center gap-1">
+            <span>💬</span>
+            <span th:text="${post.commentCount}">5</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span>❤️</span>
+            <span th:text="${post.likeCount}">12</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

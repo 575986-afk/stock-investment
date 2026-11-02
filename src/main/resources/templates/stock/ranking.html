@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>StockSim - 투자랭킹</title>
+  <!-- Tailwind CSS CDN -->
+  <style>
+    header { background: #fff; border-bottom: 1px solid #e1e4e8; display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; }
+    .logo { font-size: 20px; font-weight: bold; color: #00c7ae; text-decoration: none; }
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { text-decoration: none; color: #555; font-size: 15px; font-weight: 500; }
+    .nav-links a:hover { color: #00c7ae; }
+    .auth-buttons { display: flex; gap: 10px; }
+    .btn { padding: 8px 16px; border-radius: 6px; font-size: 14px; text-decoration: none; font-weight: 500; cursor: pointer; }
+    .btn-login { border: 1px solid #d1d5db; color: #374151; background: #fff; }
+    .btn-signup { background: #00c7ae; color: #fff; border: none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div th:replace="~{fragments/mainHeader :: siteHeader}"></div>
+<!-- 메인 콘텐츠 영역 (헤더 제외) -->
+<main class="max-w-5xl mx-auto py-10 px-4">
+  <!-- 상단 타이틀 및 설명 -->
+  <div class="flex justify-between items-end mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">투자 랭킹</h1>
+      <p class="text-sm text-gray-500 mt-1">실전 모의투자 수익률 상위 투자자들의 순위입니다.</p>
+    </div>
+    <!-- 기간별 필터 탭 (선택 사항) -->
+    <div class="flex bg-gray-200 p-1 rounded-xl text-sm font-medium text-gray-600">
+      <button class="px-4 py-1.5 bg-white rounded-lg shadow-sm text-gray-800">전체</button>
+      <button class="px-4 py-1.5 hover:text-gray-800 transition-colors">월간</button>
+      <button class="px-4 py-1.5 hover:text-gray-800 transition-colors">주간</button>
+    </div>
+  </div>
+
+  <!-- 랭킹 테이블 카드 -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <table class="w-full text-left border-collapse">
+      <thead>
+      <tr class="bg-gray-50 text-gray-500 text-sm border-b border-gray-100">
+        <th class="py-4 px-6 font-medium text-center w-20">순위</th>
+        <th class="py-4 px-6 font-medium">투자자명</th>
+        <th class="py-4 px-6 font-medium text-right">수익률</th>
+        <th class="py-4 px-6 font-medium text-right">총 자산</th>
+        <th class="py-4 px-6 font-medium text-center">프로필 보기</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Thymeleaf 반복문 (백엔드에서 넘겨준 rankingList 모델 데이터 출력) -->
+      <tr th:each="rank, iterStat : ${rankingList}" class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+        <!-- 순위 (1, 2, 3위는 강조 아이콘 또는 색상 부여) -->
+        <td class="py-4 px-6 text-center font-bold">
+          <span th:if="${iterStat.count == 1}" class="inline-block w-7 h-7 bg-yellow-100 text-yellow-600 rounded-full leading-7">🥇 1</span>
+          <span th:if="${iterStat.count == 2}" class="inline-block w-7 h-7 bg-gray-100 text-gray-600 rounded-full leading-7">🥈 2</span>
+          <span th:if="${iterStat.count == 3}" class="inline-block w-7 h-7 bg-amber-100 text-amber-700 rounded-full leading-7">🥉 3</span>
+          <span th:if="${iterStat.count > 3}" th:text="${iterStat.count}" class="text-gray-500">4</span>
+        </td>
+        <!-- 투자자명 -->
+        <td class="py-4 px-6 font-semibold text-gray-800" th:text="${rank.username}">김투자</td>
+        <!-- 수익률 (상승은 빨간색, 하락은 파란색) -->
+        <td class="py-4 px-6 text-right font-semibold"
+            th:classappend="${rank.isProfit} ? 'text-red-500' : 'text-blue-500'"
+            th:text="${rank.returnRate}">+34.25%</td>
+        <!-- 총 자산 -->
+        <td class="py-4 px-6 text-right text-gray-700" th:text="${rank.totalAsset}">134,250,000원</td>
+        <!-- 상세 보기 버튼 -->
+        <td class="py-4 px-6 text-center">
+          <button class="px-3 py-1 text-xs text-emerald-600 bg-emerald-50 hover:bg-emerald-100 rounded-lg font-medium transition-colors">
+            프로필
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+</body>
+</html>

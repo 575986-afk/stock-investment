@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>주식 모의투자 플랫폼</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Apple SD Gothic Neo', sans-serif; background-color: #f4f6f9; color: #333; }
+
+        header { background: #fff; border-bottom: 1px solid #e1e4e8; display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; }
+        .logo { font-size: 20px; font-weight: bold; color: #00c7ae; text-decoration: none; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { text-decoration: none; color: #555; font-size: 15px; font-weight: 500; }
+        .nav-links a:hover { color: #00c7ae; }
+        .auth-buttons { display: flex; gap: 10px; }
+        .btn { padding: 8px 16px; border-radius: 6px; font-size: 14px; text-decoration: none; font-weight: 500; cursor: pointer; }
+        .btn-login { border: 1px solid #d1d5db; color: #374151; background: #fff; }
+        .btn-signup { background: #00c7ae; color: #fff; border: none; }
+
+        .container { max-width: 800px; margin: 30px auto; padding: 0 20px; }
+
+        /* 자산 요약 배너 */
+        .asset-card { background: linear-gradient(135deg, #00c7ae, #009688); color: #fff; padding: 25px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,199,174,0.2); }
+        .asset-card h3 { font-size: 14px; opacity: 0.9; margin-bottom: 8px; }
+        .asset-card .total-price { font-size: 28px; font-weight: bold; }
+
+        /* 주식 리스트 섹션 */
+        .section-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #111; }
+        .stock-list-box { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); overflow: hidden; }
+        .stock-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #f1f3f5; text-decoration: none; color: inherit; transition: background 0.2s; }
+        .stock-item:last-child { border-bottom: none; }
+        .stock-item:hover { background-color: #f8f9fa; }
+
+        .stock-name { font-weight: bold; font-size: 16px; }
+        .stock-market { font-size: 12px; color: #888; margin-top: 3px; }
+        .stock-right { text-align: right; }
+        .stock-price { font-weight: bold; font-size: 16px; }
+        .stock-change { font-size: 13px; margin-top: 3px; }
+
+        /* 상승/하락 색상 */
+        .rise { color: #e53935; }
+        .fall { color: #1e88e5; }
+    </style>
+</head>
+<body>
+
+<!-- 상단 헤더 조각 연결 -->
+<div th:replace="~{fragments/mainHeader :: siteHeader}"></div>
+
+<!-- 메인 컨텐츠 -->
+<div class="container">
+
+    <!-- 내 모의투자 자산 요약 배너 -->
+    <div class="asset-card">
+        <h3>내 총 평가 자산</h3>
+        <div class="total-price">10,540,200원</div>
+    </div>
+
+    <!-- 실시간 주식 시세 목록 -->
+    <div class="section-title">🔥 실시간 인기 종목</div>
+    <div class="stock-list-box">
+        <!-- 타임리프 반복문 -->
+        <div th:each="stock : ${stockList}" class="stock-item">
+            <div>
+                <div class="stock-name" th:text="${stock.name}">종목명</div>
+                <div class="stock-market">KOSPI</div>
+            </div>
+            <div class="stock-right">
+                <div class="stock-price" th:text="${stock.price} + '원'">0원</div>
+                <div class="stock-change"
+                     th:classappend="${stock.isRise} ? 'rise' : 'fall'"
+                     th:text="${stock.changePrice} + ' (' + ${stock.changeRate} + ')'">
+                    +0 (0.00%)
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
