@@ -7,17 +7,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 public class loginController {
 
     @GetMapping("/login")
     public String login(){
 
-        return "login/login";
+        return "auth/login";
     }
 
     @GetMapping("/signup")
     public String signup(){
 
-        return "login/signup";
+        return "auth/signup";
     }
 }
