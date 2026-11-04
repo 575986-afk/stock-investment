@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>StockSim - 마이페이지</title>
+    <!-- Tailwind CSS CDN (프로젝트에 맞는 CSS로 교체 가능) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .active-menu {
+            background-color: #0d9488;
+            color: white;
+        }
+        header { background: #fff; border-bottom: 1px solid #e1e4e8; display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; }
+        .logo { font-size: 20px; font-weight: bold; color: #00c7ae; text-decoration: none; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { text-decoration: none; color: #555; font-size: 15px; font-weight: 500; }
+        .nav-links a:hover { color: #00c7ae; }
+        .auth-buttons { display: flex; gap: 10px; }
+        .btn { padding: 8px 16px; border-radius: 6px; font-size: 14px; text-decoration: none; font-weight: 500; cursor: pointer; }
+        .btn-login { border: 1px solid #d1d5db; color: #374151; background: #fff; }
+        .btn-signup { background: #00c7ae; color: #fff; border: none; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<div th:replace="~{fragments/mainHeader :: siteHeader}"></div>
+
+<!-- 메인 레이아웃 컨테이너 (사이드바 + 콘텐츠) -->
+<div class="max-w-7xl mx-auto flex min-h-[calc(100vh-80px)] mt-6 px-4 gap-6">
+
+    <!-- 1. 마이페이지 전용 사이드바 -->
+    <aside class="w-64 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 h-fit shrink-0">
+        <div class="mb-6 px-3">
+            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider">마이페이지</h2>
+            <p class="text-lg font-bold text-gray-900 mt-1" th:text="${userName != null ? userName + '님' : '투자자님'}">홍길동님</p>
+        </div>
+
+        <nav class="space-y-1">
+            <!-- 활성화된 메뉴 (동적으로 타임리프 th:classAppend 등 활용 가능) -->
+            <a href="/mypage" class="flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl text-teal-600 bg-teal-50 transition">
+                📊 투자 현황 요약
+            </a>
+            <a href="/mypage/assets" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
+                💰 계좌 및 잔고 조회
+            </a>
+            <a href="/mypage/orders" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
+                📝 체결 / 미체결 내역
+            </a>
+            <a href="/mypage/watchlist" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
+                ⭐ 관심 종목 관리
+            </a>
+            <a href="/mypage/ranking" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
+                🏆 내 수익률 랭킹
+            </a>
+            <div class="pt-4 mt-4 border-t border-gray-100">
+                <a href="/mypage/edit" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
+                    ⚙️ 회원 정보 수정
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- 2. 마이페이지 우측 콘텐츠 영역 -->
+    <main class="flex-1 space-y-6">
+
+        <!-- 상단 요약 카드 (총 평가 자산 / 총 손익) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <p class="text-sm font-medium text-gray-500">총 평가 자산</p>
+                <p class="text-2xl font-bold text-gray-900 mt-2" th:text="${#numbers.formatInteger(totalAsset, 0, 'COMMA') + '원'}">10,540,200원</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <p class="text-sm font-medium text-gray-500">총 평가 손익</p>
+                <p class="text-2xl font-bold text-red-500 mt-2" th:text="${totalProfit >= 0 ? '+' + #numbers.formatInteger(totalProfit, 0, 'COMMA') + '원' : #numbers.formatInteger(totalProfit, 0, 'COMMA') + '원'}">+540,200원</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <p class="text-sm font-medium text-gray-500">총 수익률</p>
+                <p class="text-2xl font-bold text-red-500 mt-2" th:text="${profitRate + '%'}">+5.40%</p>
+            </div>
+        </div>
+
+        <!-- 보유 종목 리스트 테이블 카드 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-gray-900">보유 종목 현황</h3>
+                <span class="text-xs text-gray-400">* 모의투자 계좌 기준 실시간 반영</span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                    <tr class="border-b border-gray-100 text-xs font-semibold text-gray-400 uppercase">
+                        <th class="py-3 px-4">종목명</th>
+                        <th class="py-3 px-4">보유수량</th>
+                        <th class="py-3 px-4">매입평균가</th>
+                        <th class="py-3 px-4">현재가</th>
+                        <th class="py-3 px-4">평가손익</th>
+                        <th class="py-3 px-4">수익률</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-gray-50">
+                    <!-- 타임리프 반복문 예시 -->
+                    <!-- <tr th:each="stock : ${stockList}"> -->
+                    <tr class="hover:bg-gray-50/50">
+                        <td class="py-4 px-4 font-semibold text-gray-900">삼성전자</td>
+                        <td class="py-4 px-4 text-gray-600">10주</td>
+                        <td class="py-4 px-4 text-gray-600">70,000원</td>
+                        <td class="py-4 px-4 text-gray-900 font-medium">72,500원</td>
+                        <td class="py-4 px-4 font-medium text-red-500">+25,000원</td>
+                        <td class="py-4 px-4 font-medium text-red-500">+3.57%</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50/50">
+                        <td class="py-4 px-4 font-semibold text-gray-900">SK하이닉스</td>
+                        <td class="py-4 px-4 text-gray-600">5주</td>
+                        <td class="py-4 px-4 text-gray-600">170,500원</td>
+                        <td class="py-4 px-4 text-gray-900 font-medium">168,000원</td>
+                        <td class="py-4 px-4 font-medium text-blue-500">-12,500원</td>
+                        <td class="py-4 px-4 font-medium text-blue-500">-1.46%</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+</body>
+</html>
