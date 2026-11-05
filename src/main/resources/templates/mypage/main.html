@@ -29,36 +29,7 @@
 <div class="max-w-7xl mx-auto flex min-h-[calc(100vh-80px)] mt-6 px-4 gap-6">
 
     <!-- 1. 마이페이지 전용 사이드바 -->
-    <aside class="w-64 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 h-fit shrink-0">
-        <div class="mb-6 px-3">
-            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider">마이페이지</h2>
-            <p class="text-lg font-bold text-gray-900 mt-1" th:text="${userName != null ? userName + '님' : '투자자님'}">홍길동님</p>
-        </div>
-
-        <nav class="space-y-1">
-            <!-- 활성화된 메뉴 (동적으로 타임리프 th:classAppend 등 활용 가능) -->
-            <a href="/mypage" class="flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl text-teal-600 bg-teal-50 transition">
-                📊 투자 현황 요약
-            </a>
-            <a href="/mypage/assets" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
-                💰 계좌 및 잔고 조회
-            </a>
-            <a href="/mypage/orders" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
-                📝 체결 / 미체결 내역
-            </a>
-            <a href="/mypage/watchlist" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
-                ⭐ 관심 종목 관리
-            </a>
-            <a href="/mypage/ranking" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
-                🏆 내 수익률 랭킹
-            </a>
-            <div class="pt-4 mt-4 border-t border-gray-100">
-                <a href="/mypage/edit" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
-                    ⚙️ 회원 정보 수정
-                </a>
-            </div>
-        </nav>
-    </aside>
+    <div th:replace="~{fragments/mypageSidebar :: sidebar}"></div>
 
     <!-- 2. 마이페이지 우측 콘텐츠 영역 -->
     <main class="flex-1 space-y-6">
