@@ -106,10 +106,10 @@
   <div class="login-card">
     <a href="/" class="login-logo">📊 StockSim</a>
 
-    <form th:action="@{/login}" method="post">
+    <form th:action="@{/auth/loginProcess}" method="post">
       <div class="input-group">
-        <label for="username">아이디 (이메일)</label>
-        <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" required>
+        <label for="email">아이디 (이메일)</label>
+        <input type="text" id="email" name="email" placeholder="아이디를 입력하세요" required>
       </div>
 
       <div class="input-group">
@@ -121,7 +121,7 @@
     </form>
 
     <div class="login-footer">
-      계정이 없으신가요? <a href="/signup">회원가입</a>
+      계정이 없으신가요? <a href="/auth/signup">회원가입</a>
     </div>
   </div>
 </div>

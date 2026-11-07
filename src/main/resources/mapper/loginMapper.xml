@@ -5,7 +5,7 @@
 <mapper namespace="org.example.stockinvestment.mapper.loginMapper">
 
     <select id="findByUser" resultType="org.example.stockinvestment.entity.userDTO">
-    select email, password
+    select email, password, name, balance, createdAt
     from users
     where email=#{email} and password=#{password}
 </select>

@@ -11,6 +11,7 @@ import java.util.Date;
 @ToString
 public class userDTO {
 
+    private String name;
     private String email;
     private String password;
     private int balance;

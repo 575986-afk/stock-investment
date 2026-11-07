@@ -3,12 +3,12 @@ spring:
     name: stock-investment
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:FREEPDB1
+    url: jdbc:oracle:thin:@localhost:1521/FREEPDB1
     username: stocks
     password: trades
 
-  # MyBatis 설정
-  mybatis:
-    mapper-locations: classpath:mapper/*.xml
-    configuration:
-      map-underscore-to-camel-case: true
+# MyBatis 설정
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

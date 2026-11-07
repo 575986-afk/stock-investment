@@ -24,7 +24,7 @@ public class loginController {
         return "auth/login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/loginProcess")
     public String loginProcess(@RequestParam("email")String email, @RequestParam("password")String password,
                                HttpSession session, Model model){
         userDTO user= ls.login(email, password);
@@ -34,7 +34,7 @@ public class loginController {
             return "auth/login";
         }
 
-        session.setAttribute("loginUser",user.getEmail());
+        session.setAttribute("user",user);
 
         return "redirect:/";
 
