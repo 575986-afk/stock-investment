@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>주식 모의투자 플랫폼</title>
@@ -63,13 +63,13 @@
         <div th:each="stock : ${stockList}" class="stock-item">
             <div>
                 <div class="stock-name" th:text="${stock.name}">종목명</div>
-                <div class="stock-market">KOSPI</div>
+                <div class="stock-market" th:text="${stock.market}">KOSPI</div>
             </div>
             <div class="stock-right">
-                <div class="stock-price" th:text="${stock.price} + '원'">0원</div>
+                <div class="stock-price" th:text="${stock.formattedPrice} + '원'">0원</div>
                 <div class="stock-change"
-                     th:classappend="${stock.isRise} ? 'rise' : 'fall'"
-                     th:text="${stock.changePrice} + ' (' + ${stock.changeRate} + ')'">
+                     th:classappend="${stock.rise} ? 'rise' : 'fall'"
+                     th:text="${stock.formattedChangePrice} + ' (' + ${stock.formattedChangeRate} + ')'">
                     +0 (0.00%)
                 </div>
             </div>

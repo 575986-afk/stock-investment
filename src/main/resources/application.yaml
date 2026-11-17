@@ -1,14 +1,23 @@
 spring:
   application:
     name: stock-investment
+  config:
+    # 로컬 비밀 설정 (Git 미추적). 있으면 이 파일의 값이 아래 값을 덮어씀
+    # 예시: src/main/resources/application-local.yaml.example 참고
+    import: optional:classpath:application-local.yaml
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521/FREEPDB1
     username: stocks
-    password: trades
+    # 비밀번호는 환경변수 DB_PASSWORD 또는 application-local.yaml 에서 주입
+    password: ${DB_PASSWORD:}
 
 # MyBatis 설정
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+
+# 주식 시세 데이터 소스: mock(하드코딩) | kis(한국투자증권 Open API, 추후 구현)
+stock:
+  data-source: mock

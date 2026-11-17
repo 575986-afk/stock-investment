@@ -1,0 +1,11 @@
+# 이 파일을 application-local.yaml 로 복사한 뒤 실제 값을 입력하세요.
+# application-local.yaml 은 .gitignore 에 등록되어 Git에 올라가지 않습니다.
+# (환경변수 DB_PASSWORD 를 설정해도 됩니다)
+spring:
+  datasource:
+    password: 여기에_DB_비밀번호
+
+# 추후 한국투자증권 Open API 연동 시 사용 예정
+#kis:
+#  app-key: 발급받은_APP_KEY
+#  app-secret: 발급받은_APP_SECRET
